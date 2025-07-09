@@ -1,12 +1,11 @@
 /* --- ESTILOS BASE (Mobile-First) --- */
-
 .rifa-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
-    padding: 10px; /* Padding base para móviles */
+    padding: 10px;
     box-sizing: border-box;
 }
 
@@ -16,25 +15,27 @@ h1 {
     text-align: center;
 }
 
-/* Contenedor de la tabla para scroll en móviles */
+/* Contenedor de la tabla */
 .rifa-table-wrapper {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    /* Quitamos el scroll horizontal para la vista móvil */
+    overflow-x: hidden;
+    
     border-radius: 8px;
 }
 
 .rifa-table {
+    width: 100%; /* La tabla ocupa todo el ancho de su contenedor */
     margin: 0 auto;
     border-collapse: collapse;
-    min-width: 500px; 
+    /* No necesitamos min-width en la vista móvil con 5 columnas */
 }
 
 .rifa-table th,
 .rifa-table td {
     border: 1px solid #333;
-    padding: 8px 14px; /* Padding para móviles */
-    font-size: 0.9rem; /* Fuente para móviles */
+    padding: 8px 14px;
+    font-size: 0.9rem;
     text-align: center;
     cursor: pointer;
     font-weight: bold;
@@ -102,9 +103,9 @@ h1 {
 
 /* --- ESTILOS PARA ESCRITORIO (Computadores) --- */
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
     .rifa-container {
-        padding: 40px; /* Más espacio en escritorio */
+        padding: 40px;
     }
 
     h1 {
@@ -112,43 +113,41 @@ h1 {
     }
 
     .rifa-table-wrapper {
-        overflow-x: visible; /* No se necesita scroll horizontal */
+        /* En escritorio, sí permitimos scroll si es necesario */
+        overflow-x: auto;
     }
     
-    /* Hacemos la tabla más grande */
     .rifa-table {
         min-width: 700px; 
     }
 
     .rifa-table th,
     .rifa-table td {
-        /* Celdas más grandes */
         padding: 12px 20px; 
         font-size: 1.1rem;
     }
 
-    /* Organizamos el formulario de forma horizontal */
     .rifa-form {
-        flex-direction: row; /* La clave para la horizontalidad */
-        flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea si no caben */
+        flex-direction: row;
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        max-width: 900px; /* Un ancho máximo mayor */
-        gap: 15px; /* Espacio entre elementos */
+        max-width: 900px;
+        gap: 15px;
     }
 
     .rifa-form h2 {
-        width: 100%; /* El título ocupa toda la primera fila */
+        width: 100%;
         margin-bottom: 10px;
         font-size: 1.5rem;
     }
 
     .rifa-form input {
-        flex: 1; /* Permite que los inputs crezcan y ocupen el espacio disponible */
+        flex: 1;
         min-width: 200px;
     }
 
     .rifa-form button {
-        flex-grow: 1; /* Los botones también crecen */
+        flex-grow: 1;
     }
 }

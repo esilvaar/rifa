@@ -1,21 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import "./Rifa.css";
 
-const NUM_ROWS = 10;
-const NUM_COLS = 10;
 const API_URL = "https://68433250e1347494c31f641f.mockapi.io/vendidos";
 
+// --- Hook para detectar el tamaño de la ventana ---
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize(); // Se llama una vez al inicio para tener el tamaño inicial
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return { width: size[0], height: size[1] };
+}
+// --- Fin del Hook ---
+
 const Rifa = () => {
-    // soldNumbers almacena los números de rifa (1-100) que están vendidos
     const [soldNumbers, setSoldNumbers] = useState([]);
     const [currentNumber, setCurrentNumber] = useState(null);
-    // numberData mapea el número de rifa a sus datos, incluyendo el ID de la API
-    // Ejemplo: { 42: { id: 'auto-id-de-api', nombre: '...', telefono: '...' } }
     const [numberData, setNumberData] = useState({});
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
 
-    // GET: Cargar datos iniciales
+    // Hook para detectar si la vista es móvil
+    const { width } = useWindowSize();
+    const isMobile = width < 768; // Definimos el punto de quiebre para móvil
+
+    // ... (El resto de tus funciones: useEffect, handleNumberClick, handleSave, etc. no necesitan cambios)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,7 +45,7 @@ const Rifa = () => {
                         const raffleNumber = parseInt(item.numeroRifa, 10);
                         newSoldNumbers.push(raffleNumber);
                         newData[raffleNumber] = {
-                            id: item.id, // ID único de la API
+                            id: item.id,
                             nombre: item.nombre,
                             telefono: item.telefono
                         };
@@ -58,10 +72,14 @@ const Rifa = () => {
         }
     };
 
-    // POST: Guarda un número por primera vez
     const handleSave = async (e) => {
         e.preventDefault();
         if (!name.trim() || !currentNumber) return;
+
+        if (soldNumbers.includes(currentNumber)) {
+             alert("Este número ya fue vendido. Use Actualizar.");
+             return;
+        }
 
         try {
             const response = await fetch(API_URL, {
@@ -94,7 +112,6 @@ const Rifa = () => {
         }
     };
     
-    // PUT: Actualiza un número ya vendido
     const handleUpdate = async (e) => {
         e.preventDefault();
         if (!name.trim() || !currentNumber || !soldNumbers.includes(currentNumber)) return;
@@ -121,7 +138,6 @@ const Rifa = () => {
         }
     };
 
-    // DELETE: Libera un número
     const handleDelete = async (e) => {
         e.preventDefault();
         if (!currentNumber || !soldNumbers.includes(currentNumber)) return;
@@ -147,15 +163,27 @@ const Rifa = () => {
         }
     };
 
+
+    // --- LÓGICA DE RENDERIZADO DE TABLA ACTUALIZADA ---
     const renderTable = () => {
-        let rows = [];
-        for (let i = 0; i < NUM_ROWS; i++) {
-            let cols = [];
-            for (let j = 0; j < NUM_COLS; j++) {
-                const cellNumber = i * NUM_COLS + j + 1;
+        // Decide las dimensiones de la tabla según el tamaño de la pantalla
+        const numRows = isMobile ? 20 : 10;
+        const numCols = isMobile ? 5 : 10;
+        
+        let tableRows = [];
+        for (let i = 0; i < numRows; i++) {
+            let tableCols = [];
+            for (let j = 0; j < numCols; j++) {
+                // La fórmula para calcular el número de la celda se ajusta dinámicamente
+                const cellNumber = i * numCols + j + 1;
+                
+                // Nos aseguramos de no renderizar más de 100 números
+                if (cellNumber > 100) continue; 
+                
                 const isSold = soldNumbers.includes(cellNumber);
                 const isSelected = currentNumber === cellNumber;
-                cols.push(
+                
+                tableCols.push(
                     <td
                         key={cellNumber}
                         className={`rifa-cell ${isSold ? "sold" : ""} ${isSelected ? "selected" : ""}`}
@@ -165,22 +193,22 @@ const Rifa = () => {
                     </td>
                 );
             }
-            rows.push(<tr key={i}>{cols}</tr>);
+            tableRows.push(<tr key={i}>{tableCols}</tr>);
         }
-        return rows;
+        return tableRows;
     };
 
     return (
         <div className="rifa-container">
-            <h1>Rifa Club Río Toltén</h1>
+            <h1>Rifa de Números</h1>
             <div className="rifa-table-wrapper">
                 <table className="rifa-table">
                     <tbody>{renderTable()}</tbody>
                 </table>
             </div>
             <form className="rifa-form">
-                <h2>
-                    {currentNumber ? ` ${currentNumber}` : "Selecciona un número"}
+                 <h2>
+                    {currentNumber ? `Gestionar número ${currentNumber}` : "Selecciona un número"}
                 </h2>
                 <input
                     type="text"
@@ -215,7 +243,7 @@ const Rifa = () => {
                     onClick={handleDelete}
                     disabled={!currentNumber || !soldNumbers.includes(currentNumber)}
                 >
-                    Eliminar
+                    Eliminar (Liberar)
                 </button>
             </form>
         </div>
