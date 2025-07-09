@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/rifa/static/css/main.498e201d.css",
-    "main.js": "/rifa/static/js/main.99915283.js",
+    "main.js": "/rifa/static/js/main.ec0bf98c.js",
     "static/js/453.4e059a40.chunk.js": "/rifa/static/js/453.4e059a40.chunk.js",
     "index.html": "/rifa/index.html",
     "main.498e201d.css.map": "/rifa/static/css/main.498e201d.css.map",
-    "main.99915283.js.map": "/rifa/static/js/main.99915283.js.map",
+    "main.ec0bf98c.js.map": "/rifa/static/js/main.ec0bf98c.js.map",
     "453.4e059a40.chunk.js.map": "/rifa/static/js/453.4e059a40.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.498e201d.css",
-    "static/js/main.99915283.js"
+    "static/js/main.ec0bf98c.js"
   ]
 }
