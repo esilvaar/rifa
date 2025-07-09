@@ -1,36 +1,155 @@
-/* Centrar todos los componentes */
+/* --- ESTILOS BASE (Mobile-First) --- */
+
 .rifa-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
+    padding: 10px; /* Padding base para móviles */
+    box-sizing: border-box;
 }
 
-/* Centrar la tabla */
-.rifa-table {
-    margin: 0 auto;
-    border-collapse: collapse;
-}
-
-/* Bordes entre cada casilla */
-.rifa-table th,
-.rifa-table td {
-    border: 1px solid #333;
-    padding: 8px 16px;
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
     text-align: center;
 }
 
-/* Opcional: bordes en toda la tabla */
-.rifa-table {
+/* Contenedor de la tabla para scroll en móviles */
+.rifa-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border: 2px solid #333;
-    width: 80vw;
-    min-height: 60vh;
+    border-radius: 8px;
 }
-.rifa-cell.just-saved {
-    background-color: #b2ffb2 !important; /* Verde claro */
-    transition: background 0.5s;
+
+.rifa-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    min-width: 500px; 
 }
+
+.rifa-table th,
+.rifa-table td {
+    border: 1px solid #333;
+    padding: 8px 14px; /* Padding para móviles */
+    font-size: 0.9rem; /* Fuente para móviles */
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.rifa-cell {
+    background-color: #c8e6c9; /* Verde claro inicial */
+}
+
+.rifa-cell.sold {
+    background-color: #ff8a80;
+    color: white;
+}
+
+.rifa-cell:not(.sold):hover {
+    background-color: #a5d6a7;
+    transform: scale(1.05);
+}
+
 .rifa-cell.selected {
-    outline: 2px solid #2196f3;
+    outline: 3px solid #2196f3;
+    outline-offset: -3px;
+    z-index: 10;
+}
+
+/* Formulario por defecto (móvil) */
+.rifa-form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 95%;
+    max-width: 400px;
+}
+
+.rifa-form h2 {
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.rifa-form input, .rifa-form button {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.rifa-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.rifa-form button:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.rifa-form button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+
+/* --- ESTILOS PARA ESCRITORIO (Computadores) --- */
+
+@media (min-width: 1024px) {
+    .rifa-container {
+        padding: 40px; /* Más espacio en escritorio */
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .rifa-table-wrapper {
+        overflow-x: visible; /* No se necesita scroll horizontal */
+    }
+    
+    /* Hacemos la tabla más grande */
+    .rifa-table {
+        min-width: 700px; 
+    }
+
+    .rifa-table th,
+    .rifa-table td {
+        /* Celdas más grandes */
+        padding: 12px 20px; 
+        font-size: 1.1rem;
+    }
+
+    /* Organizamos el formulario de forma horizontal */
+    .rifa-form {
+        flex-direction: row; /* La clave para la horizontalidad */
+        flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea si no caben */
+        justify-content: center;
+        align-items: center;
+        max-width: 900px; /* Un ancho máximo mayor */
+        gap: 15px; /* Espacio entre elementos */
+    }
+
+    .rifa-form h2 {
+        width: 100%; /* El título ocupa toda la primera fila */
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+
+    .rifa-form input {
+        flex: 1; /* Permite que los inputs crezcan y ocupen el espacio disponible */
+        min-width: 200px;
+    }
+
+    .rifa-form button {
+        flex-grow: 1; /* Los botones también crecen */
+    }
 }
