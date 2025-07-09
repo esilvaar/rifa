@@ -10,11 +10,62 @@
     box-sizing: border-box;
 }
 
-h1 {
-    font-size: 1.8rem;
+.app-logo {
+    height: 100px;
     margin-bottom: 15px;
-    text-align: center;
 }
+
+/* Contenedor principal del título modificado */
+.title-container {
+    display: flex;
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: center;
+    gap: 10px; /* Espacio entre el título y la barra de información */
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 15px;
+}
+
+.title-container h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 0;
+}
+
+/* NUEVO: Contenedor para el contador y el botón de descarga */
+.info-bar {
+    display: flex;
+    justify-content: space-between; /* <-- La clave para separar los elementos */
+    align-items: center;
+    width: 100%;
+}
+
+.sold-counter {
+    
+    color: rgb(0, 0, 0);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.download-button {
+    padding: 8px 16px; /* Ajustado para que no sea tan grande */
+    font-size: 0.9rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #ccc;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.download-button:hover {
+    background-color: #0277bd;
+}
+
 
 .rifa-table-wrapper {
     width: 100%;
@@ -97,10 +148,10 @@ h1 {
     cursor: not-allowed;
 }
 
-/* --- NUEVOS ESTILOS PARA NOTIFICACIONES --- */
+/* --- ESTILOS PARA NOTIFICACIONES --- */
 .custom-notification {
     position: fixed;
-    top: -100px; /* Inicia fuera de la pantalla */
+    top: -100px;
     left: 50%;
     transform: translateX(-50%);
     padding: 15px 25px;
@@ -113,17 +164,17 @@ h1 {
 }
 
 .custom-notification.show {
-    top: 20px; /* Se desliza hacia abajo */
+    top: 20px;
     opacity: 1;
 }
 
 .custom-notification.success {
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50;
     box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
 }
 
 .custom-notification.error {
-    background-color: #f44336; /* Rojo */
+    background-color: #f44336;
     box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
 }
 
@@ -134,9 +185,26 @@ h1 {
     .rifa-container {
         padding: 40px;
     }
+    
+    .app-logo {
+        height: 150px;
+    }
 
-    h1 {
-        font-size: 2.5rem;
+    .title-container {
+        max-width: 700px; /* Ancho mayor para el contenedor del título en escritorio */
+    }
+
+    .title-container h1 {
+        font-size: 2.2rem;
+    }
+
+    .sold-counter {
+        font-size: 1.1rem;
+        padding: 8px 16px;
+    }
+
+    .download-button {
+        font-size: 1rem;
     }
 
     .rifa-table-wrapper {

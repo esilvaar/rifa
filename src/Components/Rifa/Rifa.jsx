@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 // Importa la instancia de la base de datos y las funciones de Firestore
 import { db } from "../../firebase";
 import { collection, onSnapshot, doc, setDoc, deleteDoc } from "firebase/firestore";
+
 import "./Rifa.css";
 
 // Hook para detectar el tamaño de la ventana (sin cambios)
@@ -116,6 +117,32 @@ const Rifa = () => {
         }
     };
 
+    const handleDownloadList = () => {
+        if (Object.keys(numberData).length === 0) {
+            showNotification("No hay números vendidos para exportar.", "error");
+            return;
+        }
+
+        const sortedData = Object.entries(numberData).sort((a, b) => {
+            return parseInt(a[0], 10) - parseInt(b[0], 10);
+        });
+
+        let fileContent = "Lista de Números Vendidos - Rifa Club de Pesca Río Toltén\n";
+        fileContent += "========================================================\n\n";
+
+        sortedData.forEach(([numeroRifa, data]) => {
+            fileContent += `Número ${numeroRifa}: ${data.nombre}\n`;
+        });
+
+        const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'lista_rifa_vendidos.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     const renderTable = () => {
         const numRows = isMobile ? 20 : 10;
         const numCols = isMobile ? 5 : 10;
@@ -149,11 +176,18 @@ const Rifa = () => {
             <div className={`custom-notification ${notification.type} ${notification.show ? 'show' : ''}`}>
                 {notification.message}
             </div>
+            
+            
 
-            {/* --- SECCIÓN DEL TÍTULO MODIFICADA --- */}
             <div className="title-container">
-                <h1>Rifa Club de Pesca y Caza Río Toltén</h1>
-                <span className="sold-counter">{soldNumbers.length} / 100 Vendidos</span>
+                <h1>Rifa Club de Pesca Río Toltén</h1>
+                {/* NUEVO: Contenedor para la barra de información */}
+                <div className="info-bar">
+                    <span className="sold-counter">{soldNumbers.length} / 100 Vendidos</span>
+                    <button onClick={handleDownloadList} className="download-button">
+                        Descargar Lista
+                    </button>
+                </div>
             </div>
 
             <div className="rifa-table-wrapper">
@@ -191,7 +225,7 @@ const Rifa = () => {
                     onClick={handleDelete}
                     disabled={!currentNumber || !soldNumbers.includes(currentNumber)}
                 >
-                    Eliminar 
+                    Eliminar (Liberar)
                 </button>
             </form>
         </div>
