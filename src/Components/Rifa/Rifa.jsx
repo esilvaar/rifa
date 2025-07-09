@@ -172,7 +172,7 @@ const Rifa = () => {
 
     return (
         <div className="rifa-container">
-            <h1>Rifa de Números</h1>
+            <h1>Rifa Club Río Toltén</h1>
             <div className="rifa-table-wrapper">
                 <table className="rifa-table">
                     <tbody>{renderTable()}</tbody>
@@ -180,7 +180,7 @@ const Rifa = () => {
             </div>
             <form className="rifa-form">
                 <h2>
-                    {currentNumber ? `Gestionar número ${currentNumber}` : "Selecciona un número"}
+                    {currentNumber ? ` ${currentNumber}` : "Selecciona un número"}
                 </h2>
                 <input
                     type="text"
@@ -215,7 +215,7 @@ const Rifa = () => {
                     onClick={handleDelete}
                     disabled={!currentNumber || !soldNumbers.includes(currentNumber)}
                 >
-                    Eliminar (Liberar)
+                    Eliminar
                 </button>
             </form>
         </div>
