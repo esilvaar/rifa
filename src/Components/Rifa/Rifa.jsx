@@ -152,7 +152,7 @@ const Rifa = () => {
 
             {/* --- SECCIÓN DEL TÍTULO MODIFICADA --- */}
             <div className="title-container">
-                <h1>Rifa con Firebase</h1>
+                <h1>Rifa Club de Pesca y Caza Río Toltén</h1>
                 <span className="sold-counter">{soldNumbers.length} / 100 Vendidos</span>
             </div>
 
@@ -191,7 +191,7 @@ const Rifa = () => {
                     onClick={handleDelete}
                     disabled={!currentNumber || !soldNumbers.includes(currentNumber)}
                 >
-                    Eliminar (Liberar)
+                    Eliminar 
                 </button>
             </form>
         </div>
