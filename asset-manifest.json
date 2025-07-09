@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/rifa/static/css/main.63e64ecc.css",
+    "main.js": "/rifa/static/js/main.964f5092.js",
+    "static/js/453.41f3d866.chunk.js": "/rifa/static/js/453.41f3d866.chunk.js",
+    "static/media/logo.svg": "/rifa/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/rifa/index.html",
+    "main.63e64ecc.css.map": "/rifa/static/css/main.63e64ecc.css.map",
+    "main.964f5092.js.map": "/rifa/static/js/main.964f5092.js.map",
+    "453.41f3d866.chunk.js.map": "/rifa/static/js/453.41f3d866.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.63e64ecc.css",
+    "static/js/main.964f5092.js"
+  ]
+}
