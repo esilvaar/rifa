@@ -180,7 +180,7 @@ const Rifa = () => {
             
 
             <div className="title-container">
-                <h1>Rifa Club de Pesca Río Toltén</h1>
+                <h1>Rifa Club Deportivo Flecha Aniversario 85</h1>
                 {/* NUEVO: Contenedor para la barra de información */}
                 <div className="info-bar">
                     <span className="sold-counter">{soldNumbers.length} / 100 Vendidos</span>
